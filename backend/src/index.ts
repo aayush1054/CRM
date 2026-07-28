@@ -45,6 +45,11 @@ const JWT_SECRET = process.env.JWT_SECRET || 'super_secret_fallback_key';
 // ROUTES
 // ==========================================
 
+// Health check route for Railway
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'Backend is running' });
+});
+
 // 1. Auth (/auth): Login route
 app.post('/auth/login', async (req, res) => {
   try {
