@@ -121,6 +121,25 @@ Netlify is perfect for hosting the React Single Page Application (SPA).
 
 ---
 
+## 🏗️ Architecture Explanation
+
+Orbit CRM follows a standard **Client-Server (Monolithic API)** architecture, organized as a Monorepo:
+1. **Frontend (Client Layer):** A React SPA built with Vite. It handles routing locally (React Router) and manages state mostly through local component state and prop drilling for simplicity. It communicates with the backend via RESTful API calls using `axios`. The CSS is entirely custom, built from scratch without bulky UI libraries to ensure lightning-fast performance and a highly tailored aesthetic.
+2. **Backend (API Layer):** A Node.js Express server that exposes REST endpoints. It implements Role-Based Access Control (RBAC) via custom middleware, verifying JWT tokens on protected routes.
+3. **Database Layer:** Powered by PostgreSQL. We use **Prisma ORM** for type-safe database queries. The database schema strictly enforces relations (e.g., a Challan relies on Customer and User IDs, and ChallanItems connect to Products). When a Challan is confirmed, a database transaction ensures that stock reduction and movement logging happen atomically to prevent data corruption.
+
+---
+
+## ⚠️ Known Limitations & Incomplete Parts
+
+While fully functional, the current version has a few boundaries:
+*   **No Image Hosting / CDN:** Product images are currently uploaded to the local `/uploads` directory on the backend server. In an ephemeral cloud environment (like Railway/Heroku), these images will be lost on container restart. *Fix: Integrate AWS S3 or Cloudinary in the `multer` middleware.*
+*   **Pagination Missing on Frontend:** The backend API supports `?page=` and `?limit=` for pagination, but the frontend currently fetches all items and handles pagination purely on the client side (in memory). For massive datasets, this could slow down the browser.
+*   **No Password Reset Flow:** There is no "Forgot Password" or email-sending logic currently implemented.
+*   **Single Currency:** The system hardcodes `Rs.` (Rupees) in the frontend and PDF generation. It does not support multi-currency out of the box.
+
+---
+
 ## 📂 Project Structure
 
 ```text
