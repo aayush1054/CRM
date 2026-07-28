@@ -29,24 +29,22 @@ export default function Login() {
   };
 
   return (
-    <div className="login-wrapper">
+    <div className="login-container">
       <div className="card login-card">
-        <div className="login-header">
-          <div className="login-logo-icon">O</div>
-          <h2>Welcome Back</h2>
-          <p>Sign in to Orbit CRM</p>
-        </div>
+        <div className="login-logo">O</div>
+        <h2>Welcome Back</h2>
+        <p>Sign in to Orbit CRM</p>
         
-        {error && <div className="error-banner">{error}</div>}
+        {error && <div className="error-message">{error}</div>}
         
-        <form onSubmit={handleLogin} className="login-form">
-          <div className="input-group">
-            <label>Email Address</label>
+        <form onSubmit={handleLogin} className="form-grid" style={{ gridTemplateColumns: '1fr', gap: '1rem', marginTop: '1.5rem' }}>
+          <div className="form-group">
+            <label style={{ textAlign: 'left' }}>Email Address</label>
             <select 
               value={email} 
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="login-input"
+              className="form-input"
             >
               <option value="" disabled>Select a test role...</option>
               <option value="admin@erp.com">Admin (admin@erp.com)</option>
@@ -56,14 +54,14 @@ export default function Login() {
             </select>
           </div>
           
-          <div className="input-group">
-            <label>Password</label>
+          <div className="form-group">
+            <label style={{ textAlign: 'left' }}>Password</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="login-input"
+              className="form-input"
             />
           </div>
           
