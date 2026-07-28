@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+        
+    - name: Install Backend Dependencies
+      run: |
+        cd backend
+        npm ci
+        npx prisma generate
+        
+    - name: Install Frontend Dependencies & Build
+      run: |
+        cd frontend
+        npm ci
+        npm run build
+
+  # Deployment step would go here (e.g., to Render/Vercel or AWS ECS)
+  # deploy:
+  #   needs: build-and-test
+  #   runs-on: ubuntu-latest
+  #   steps: ...
