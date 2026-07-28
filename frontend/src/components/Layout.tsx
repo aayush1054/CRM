@@ -1,9 +1,15 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
 import { LayoutDashboard, Users, Package, FileText, LogOut, Bell } from 'lucide-react';
 import './Layout.css';
 
 export default function Layout() {
   const location = useLocation();
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
 
   const role = localStorage.getItem('role') || '';
   const email = localStorage.getItem('email') || '';
